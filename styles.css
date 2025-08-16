@@ -1,0 +1,638 @@
+/* ==========================
+   VARIÁVEIS
+========================== */
+:root {
+  /* Cores */
+  --color-primary: #5c2a9d;
+  --color-primary-hover: #7d3fc7;
+  --color-secondary: #a561ff;
+  --color-secondary-hover: #7700ff;
+  --color-bg-gradient: linear-gradient(135deg, #ffe5ec, #e0bbff, #c8e7ff);
+  --color-card-bg: rgba(255, 255, 255, 0.9);
+  --color-card-actions: #fdfdfd;
+  --color-text: #333;
+
+  /* Fontes */
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* Tamanhos */
+  --btn-size: 50px;
+  --btn-font: 24px;
+  --header-padding: 2rem;
+  --gallery-gap: 1.5rem;
+  --card-radius: 1rem;
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  --card-shadow-hover: 0 8px 18px rgba(0,0,0,0.25);
+
+  /* Transições */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+}
+
+/* ==========================
+   RESET
+========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
+
+body {
+  background: var(--color-bg-gradient);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text);
+}
+
+/* ==========================
+   HEADER
+========================= */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+/* Efeito shrink ao rolar */
+header.shrink {
+  height: 60px;
+  padding: 0 1.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+}
+
+/* Título centralizado e responsivo */
+header h1 {
+  flex: 1;
+  text-align: center;
+  font-size: 1.8rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Container para ações do header */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Botão tema */
+#themeToggle {
+  background: var(--color-primary, #5c2a9d);
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+#themeToggle:hover {
+  transform: scale(1.1);
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none; /* só aparece no mobile */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: var(--color-primary, #5c2a9d);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ==========================
+   RESPONSIVIDADE
+========================= */
+@media (max-width: 768px) {
+  header {
+    padding: 0 1rem;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-actions {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 1rem;
+    flex-direction: column;
+    background: rgba(255,255,255,0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 999;
+  }
+
+  .header-actions.open {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+    order: 1; /* fica antes do título no mobile */
+  }
+
+  #themeToggle {
+    order: 2; /* botão à direita do hamburguer */
+  }
+}
+
+/* ==========================
+   MAIN
+========================= */
+main {
+  padding-top: 100px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+
+/* ==========================
+   BUTTONS GERAIS
+========================== */
+button {
+  background: var(--color-primary);
+  color: white;
+  font-size: 1rem;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: 1s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+button:hover {
+  background: var(--color-primary-hover);
+  transform: scale(1.05);
+}
+
+/* ==========================
+   GALERIA / MAIN
+========================== */
+.painel-principal, main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--gallery-gap);
+  padding: 2rem;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--gallery-gap);
+  width: 100%;
+  max-width: 1200px;
+  justify-items: center;
+}
+
+/* ==========================
+   CARD
+========================== */
+.card {
+  background: var(--color-card-bg);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 240px;
+  position: relative;
+  transition: 1s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--card-radius);
+  transition: 1s ease;
+}
+
+.card img:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.actions {
+  padding: 0.6rem;
+  text-align: center;
+  background: var(--color-card-actions);
+}
+
+.actions a {
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  text-decoration: none;
+  transition: background var(--transition-medium), transform var(--transition-fast);
+  display: inline-block;
+  transition: 1s ease;
+}
+
+.actions a:hover {
+  background: var(--color-primary-hover);
+  transform: scale(1.05);
+}
+
+.fav-link {
+  display: inline-block;
+  margin: 0.5rem;
+  text-decoration: none;
+  color: var(--color-primary);
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.fav-link:hover {
+  color: var(--color-primary-hover);
+  transform: scale3d(1.05, 1.05, 1);
+}
+
+.card .favorite-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card .favorite-icon.active {
+  color: gold;
+  transition: 1s ease;
+}
+
+.card .favorite-icon:hover {
+  transform: scale(1.3) rotate(15deg);
+}
+
+/* ==========================
+   MODAL
+========================== */
+.modal {
+  display: flex; /* já que vamos controlar visibilidade via opacity */
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0); /* transparente no início */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal.show {
+  background-color: rgba(0,0,0,0.7);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  position: relative;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transform: scale(0.8); /* inicia menor */
+  opacity: 0;             /* inicia invisível */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal.show .modal-content {
+  transform: scale(1);   /* escala para normal */
+  opacity: 1;            /* aparece */
+}
+
+.modal-content {
+  position: relative;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal-content img {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 0.5rem;
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.modal-content img:hover {
+  box-shadow: 0 8px 20px var(--color-primary);
+}
+
+.modal-actions button {
+  margin: 0 0.5rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* ==========================
+   BOTÕES DE SCROLL FIXOS
+========================== */
+#backToTop, #topToBack {
+  position: fixed;
+  right: 20px;
+  width: var(--btn-size);
+  height: var(--btn-size);
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-secondary);
+  color: white;
+  font-size: var(--btn-font);
+  cursor: pointer;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: all var(--transition-medium);
+}
+
+#backToTop.show {
+  display: block;
+  bottom: 90px;
+}
+
+#topToBack.show {
+  display: block;
+  bottom: 20px;
+  transform: 1s ease;
+}
+
+#backToTop:hover, #topToBack:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+/* ==========================
+   FOOTER
+========================== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.7);
+  color: #eee;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  box-shadow: 0 -3px 8px rgba(0,0,0,0.2);
+}
+
+footer a {
+  color: #ffcc00;
+  margin-left: 10px;
+  transition: color 0.3s ease;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer a:hover {
+  color: white;
+}
+
+/* ==========================
+   ALTERAR O TEMA COMPLETO (MODAL & CARDS)
+========================== */
+
+/* Tema claro */
+body.light-theme {
+  background: #f5f5f5;
+  color: #222;
+}
+
+body.light-theme header {
+  background: rgba(255,255,255,0.8);
+  color: #222;
+}
+
+body.light-theme footer {
+  background: rgba(255,255,255,0.9);
+  color: #333;
+}
+
+body.light-theme .card {
+  background-color: #fff;
+  color: #222;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+body.light-theme .modal {
+  background-color: rgba(0,0,0,0.3);
+}
+
+body.light-theme .modal-content {
+  background-color: #fff;
+  color: #222;
+}
+
+body.light-theme button {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+body.light-theme .fav-link {
+  color: var(--color-primary);
+}
+
+/* Tema escuro */
+body.dark-theme {
+  background: #111;
+  color: #f5f5f5;
+}
+
+body.dark-theme header {
+  background: rgba(20,20,20,0.8);
+  color: #f5f5f5;
+}
+
+body.dark-theme footer {
+  background: rgba(20,20,20,0.8);
+  color: #eee;
+}
+
+body.dark-theme .card {
+  background-color: #222;
+  color: #f5f5f5;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+body.dark-theme .modal {
+  background-color: rgba(0,0,0,0.7);
+}
+
+body.dark-theme .modal-content {
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+body.dark-theme button {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+body.dark-theme .fav-link {
+  color: var(--color-secondary);
+}
+
+/* Transições suaves para tudo */
+body, header, footer, .card, .modal-content, .modal, button, .fav-link {
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+/* ==========================
+   ANIMAÇÕES
+========================== */
+@keyframes subirdescer {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.4s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================
+   ESTRELAS VOADORAS
+========================== */
+.flying-star {
+  width: 5px;
+  position: fixed;
+  font-size: 2rem;
+  z-index: 3000;
+  transition: transform 1.5s ease, opacity 1.5s ease;
+  pointer-events: none;
+}
+
+/* ==========================
+   MENU HAMBURGUER (RESPONSIVO)
+========================== */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: var(--color-primary);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Quando abrir menu */
+.header-actions.open {
+  flex-direction: column;
+  position: absolute;
+  top: 80px;
+  right: 1rem;
+  background: rgba(255,255,255,0.9);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .header-actions {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}

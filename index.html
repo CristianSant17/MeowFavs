@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐾 Gatos Fofinhos - Galeria Aleatória 🐾</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="MeowFavs-icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="MeowFavs-icon-16.png">
+  <link rel="apple-touch-icon" href="MeowFavs-icon-180.png">
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Script principal -->
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Cabeçalho MeowFavs -->
+  <header id="mainHeader">
+    <h1>MeowFavs – Gatinhos Fofinhos</h1>
+
+    <!-- Botões e links do header -->
+    <div class="header-right">
+      <div class="header-actions">
+        <a href="favoritos.html" class="fav-link">⭐ Meus Favoritos</a>
+        <span id="favoriteCount">0 ⭐</span>
+      </div>
+
+      <!-- Botão de tema -->
+      <button id="themeToggle">🌙</button>
+
+      <!-- Botão hamburguer -->
+      <div class="hamburger" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <div class="painel-principal">
+      <div class="gallery" id="gallery"></div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+      <i class="fas fa-spinner fa-spin"></i> Carregando...
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span id="modalClose" class="modal-close">&times;</span>
+        <img id="modalImage" src="" alt="Imagem do gatinho">
+        <div class="modal-actions">
+          <button id="saveImage">💾 Salvar</button>
+          <button id="favoriteImage">⭐ Favoritar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botões de scroll fixos -->
+    <button id="topToBack" title="Ir para o final">⬇</button>
+    <button id="backToTop" title="Voltar ao topo">⬆</button>
+  </main>
+
+  <!-- Rodapé -->
+  <footer id="mainFooter">
+    <p>
+      Feito com ❤️ e 🐱 usando 
+      <a href="https://thecatapi.com/" target="_blank">The Cat API</a> |
+      <a href="https://github.com/CristianSant17" target="_blank">
+        <i class="fab fa-github"></i> GitHub - Cristian
+      </a>
+    </p>
+  </footer>
+</body>
+</html>
