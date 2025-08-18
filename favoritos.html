@@ -1,172 +1,81 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Favoritos</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    /* ==========================
-       MODAL & ANIMAÇÃO ESTRELA
-    ========================== */
-    .flying-star {
-      position: fixed;
-      z-index: 9999;
-      font-size: 2rem;
-      pointer-events: none;
-      transition: transform 0.5s ease, opacity 0.5s ease;
-    }
-    .card { position: relative; }
-    .favorite-icon {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      user-select: none;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      background: rgba(0,0,0,0.7);
-      justify-content:center;
-      align-items:center;
-      z-index: 1000;
-    }
-    .modal.show { display:flex; }
-    .modal-content {
-      position: relative;
-      background:#fff;
-      padding:1rem;
-      border-radius:10px;
-      max-width:90%;
-      max-height:90%;
-      display:flex;
-      flex-direction: column;
-      align-items:center;
-      gap:0.8rem;
-    }
-    .modal-content img {
-      max-width:100%;
-      max-height:70vh;
-      border-radius:8px;
-    }
-    .modal-actions { display:flex; gap:10px; }
-    .modal-close {
-      position:absolute; top:10px; right:10px;
-      font-size:1.5rem;
-      cursor:pointer;
-    }
+<meta charset="UTF-8">
+<title>Favoritos</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ---------------- MODAL & ESTRELA ---------------- */
+.flying-star { position: fixed; z-index:9999; font-size:2rem; pointer-events:none; transition: transform 0.5s, opacity 0.5s; }
+.modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1000; }
+.modal.show { display:flex; }
+.modal-content { position:relative; background:#fff; padding:1rem; border-radius:10px; max-width:90%; max-height:90%; display:flex; flex-direction:column; align-items:center; gap:0.8rem; }
+.modal-content img { max-width:100%; max-height:70vh; border-radius:8px; }
+.modal-actions { display:flex; gap:10px; }
+.modal-close { position:absolute; top:10px; right:10px; font-size:1.5rem; cursor:pointer; }
 
-    /* ==========================
-       HEADER
-    ========================== */
-    header {
-      position: fixed;
-      top: 0; left:0;
-      width: 100%;
-      height: 80px;
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-      z-index: 1000;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    header h1 { font-size:1.5rem; }
-    .header-actions {
-      display:flex; gap:1rem; align-items:center;
-    }
-    .hamburger {
-      display:none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 25px; height:20px;
-      cursor:pointer;
-    }
-    .hamburger span {
-      display:block;
-      height:3px;
-      background:#333;
-      border-radius:2px;
-      transition: all 0.3s ease;
-    }
-    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-    .hamburger.active span:nth-child(2) { opacity:0; }
-    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+/* ---------------- HEADER ---------------- */
+header { position:fixed; top:0; left:0; width:100%; height:80px; background:rgba(255,255,255,0.8); backdrop-filter:blur(10px); display:flex; align-items:center; justify-content:space-between; padding:0 2rem; z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,0.1); transition:all 0.3s; }
+header h1 { font-size:1.5rem; }
+.header-actions { display:flex; gap:1rem; align-items:center; }
+.hamburger { display:none; flex-direction:column; justify-content:space-between; width:25px; height:20px; cursor:pointer; }
+.hamburger span { display:block; height:3px; background:#333; border-radius:2px; transition: all 0.3s; }
+.hamburger.active span:nth-child(1){ transform: rotate(45deg) translate(5px,5px); }
+.hamburger.active span:nth-child(2){ opacity:0; }
+.hamburger.active span:nth-child(3){ transform: rotate(-45deg) translate(5px,-5px); }
+#themeToggle { background: var(--color-primary,#5c2a9d); color:#fff; border-radius:50%; width:40px; height:40px; font-size:1.2rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.3s; }
+#themeToggle:hover{ transform: scale(1.1); }
 
-    /* BOTÃO TEMA */
-    #themeToggle {
-      background: var(--color-primary, #5c2a9d);
-      color: white;
-      border-radius: 50%;
-      width: 40px; height: 40px;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    #themeToggle:hover { transform: scale(1.1); }
+/* ---------------- RESPONSIVO ---------------- */
+@media(max-width:768px){
+  .header-actions { position:absolute; top:80px; right:0; background:rgba(255,255,255,0.95); flex-direction:column; width:200px; padding:1rem; display:none; }
+  .header-actions.open{ display:flex; }
+  .hamburger{ display:flex; }
+}
 
-    /* RESPONSIVIDADE HEADER */
-    @media(max-width:768px){
-      .header-actions { position: absolute; top:80px; right:0; background: rgba(255,255,255,0.95); flex-direction: column; width:200px; padding:1rem; display:none; }
-      .header-actions.open { display:flex; }
-      .hamburger { display:flex; }
-    }
+/* ---------------- MAIN / GALLERY ---------------- */
+main { padding-top:100px; display:flex; justify-content:center; width:100%; }
+.gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.5rem; max-width:1200px; }
+.card { position:relative; border-radius:1rem; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.15); transition:transform 0.3s, box-shadow 0.3s; cursor:pointer; }
+.card:hover{ transform:translateY(-5px); box-shadow:0 8px 18px rgba(0,0,0,0.25); }
+.card img{ width:100%; height:220px; object-fit:cover; border-radius:1rem; }
+.favorite-icon{ position:absolute; top:8px; right:8px; font-size:1.5rem; cursor:pointer; user-select:none; }
 
-    /* RESPONSIVIDADE MAIN */
-    main { padding-top:100px; display:flex; justify-content:center; width:100%; }
-    .gallery { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:1.5rem; max-width:1200px; }
-    .card { border-radius:1rem; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s; cursor:pointer; }
-    .card:hover { transform:translateY(-5px); box-shadow:0 8px 18px rgba(0,0,0,0.25); }
-    .card img { width:100%; height:220px; object-fit:cover; border-radius:1rem; }
+/* ---------------- FOOTER ---------------- */
+footer{ position:fixed; bottom:0; left:0; width:100%; background:rgba(0,0,0,0.7); color:#eee; text-align:center; padding:15px; font-size:0.9rem; }
 
-    /* ==========================
-       FOOTER
-    ========================== */
-    footer { position: fixed; bottom:0; left:0; width:100%; background: rgba(0,0,0,0.7); color:#eee; text-align:center; padding:15px; font-size:0.9rem; }
-
-    /* ==========================
-       TEMA CLARO / ESCURO
-    ========================== */
-    body.light-theme { background:#f5f5f5; color:#222; }
-    body.light-theme header { background: rgba(255,255,255,0.8); color:#222; }
-    body.light-theme footer { background: rgba(255,255,255,0.9); color:#333; }
-    body.light-theme .card { background:#fff; color:#222; box-shadow:0 4px 12px rgba(0,0,0,0.15); }
-
-    body.dark-theme { background:#111; color:#f5f5f5; }
-    body.dark-theme header { background: rgba(20,20,20,0.8); color:#f5f5f5; }
-    body.dark-theme footer { background: rgba(20,20,20,0.8); color:#eee; }
-    body.dark-theme .card { background:#222; color:#f5f5f5; box-shadow:0 4px 12px rgba(0,0,0,0.4); }
-
-    body, header, footer, .card, button, .fav-link { transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; }
-  </style>
+/* ---------------- TEMA ---------------- */
+body.light-theme{ background:#f5f5f5; color:#222; }
+body.light-theme header{ background: rgba(255,255,255,0.8); color:#222; }
+body.light-theme footer{ background: rgba(255,255,255,0.9); color:#333; }
+body.light-theme .card{ background:#fff; color:#222; box-shadow:0 4px 12px rgba(0,0,0,0.15); }
+body.dark-theme{ background:#111; color:#f5f5f5; }
+body.dark-theme header{ background: rgba(20,20,20,0.8); color:#f5f5f5; }
+body.dark-theme footer{ background: rgba(20,20,20,0.8); color:#eee; }
+body.dark-theme .card{ background:#222; color:#f5f5f5; box-shadow:0 4px 12px rgba(0,0,0,0.4); }
+body, header, footer, .card, button, .fav-link{ transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; }
+</style>
 </head>
-
 <body>
+
 <header id="mainHeader">
   <h1>MeowFavs – Meus Favoritos</h1>
   <div class="header-actions">
     <a href="index.html" class="fav-link">🏠 Voltar ao Início</a>
-    <button class="clear-btn" onclick="clearAllFavorites()">🗑️ Remover todos</button>
+    <a href="mini-games/index.html" class="fav-link">🎮 Mini-Games</a>
     <button id="themeToggle">🌙</button>
+    <button class="clear-btn" onclick="clearAllFavorites()">🗑️</button>
   </div>
   <div class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></div>
 </header>
 
 <main>
-  <div id="gallery" class="gallery"></div>
+  <div>
+    <div id="gallery" class="gallery"></div>
+  </div>
 </main>
 
-<!-- Modal -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span id="modalClose" class="modal-close">&times;</span>
@@ -182,98 +91,74 @@
   <p>
     Feito com ❤️ e 🐱 usando 
     <a href="https://thecatapi.com/" target="_blank">The Cat API</a> | 
-    <a href="https://github.com/CristianSant17" target="_blank">
-      <i class="fab fa-github"></i> GitHub - Cristian
-    </a>
+    <a href="https://github.com/CristianSant17" target="_blank"><i class="fab fa-github"></i> GitHub - Cristian</a>
   </p>
 </footer>
 
 <script>
-'use strict'
-document.addEventListener('DOMContentLoaded', () => {
-  const gallery = document.getElementById('gallery');
-  const modal = document.getElementById('modal');
-  const modalImage = document.getElementById('modalImage');
-  const modalClose = document.getElementById('modalClose');
-  const saveImageBtn = document.getElementById('saveImage');
-  const favoriteImageBtn = document.getElementById('favoriteImage');
-  const themeToggle = document.getElementById('themeToggle');
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const headerActions = document.querySelector('.header-actions');
+document.addEventListener('DOMContentLoaded',()=>{
+  const gallery=document.getElementById('gallery'),
+        modal=document.getElementById('modal'),
+        modalImage=document.getElementById('modalImage'),
+        modalClose=document.getElementById('modalClose'),
+        saveImageBtn=document.getElementById('saveImage'),
+        favoriteImageBtn=document.getElementById('favoriteImage'),
+        themeToggle=document.getElementById('themeToggle'),
+        hamburgerBtn=document.getElementById('hamburgerBtn'),
+        headerActions=document.querySelector('.header-actions');
+  let currentImageUrl=null;
 
-  let currentImageUrl = null;
+  // FAVORITOS
+  const getFavorites=()=>JSON.parse(localStorage.getItem('favorites')||'[]');
+  const saveFavorites=f=>localStorage.setItem('favorites',JSON.stringify(f));
+  const addFavorite=url=>{ const f=getFavorites(); if(!f.includes(url)) f.push(url); saveFavorites(f); renderFavorites(); };
+  const removeFavorite=url=>{ const f=getFavorites().filter(x=>x!==url); saveFavorites(f); renderFavorites(); };
+  const toggleFavorite=url=>{ const f=getFavorites(); return f.includes(url)?(removeFavorite(url),false):(addFavorite(url),true); };
+  window.clearAllFavorites=()=>{ if(confirm('Tem certeza que deseja remover todos os favoritos? 🐾')){ localStorage.removeItem('favorites'); renderFavorites(); } };
 
-  // ================= FAVORITOS =================
-  function getFavorites(){ return JSON.parse(localStorage.getItem('favorites')||'[]'); }
-  function saveFavorites(favs){ localStorage.setItem('favorites',JSON.stringify(favs)); }
-  function addFavorite(url){ const favs=getFavorites(); if(!favs.includes(url)) favs.push(url); saveFavorites(favs); renderFavorites(); }
-  function removeFavorite(url){ let favs=getFavorites(); favs=favs.filter(f=>f!==url); saveFavorites(favs); renderFavorites(); }
-  function toggleFavorite(url){ const favs=getFavorites(); if(favs.includes(url)){ removeFavorite(url); return false; }else{ addFavorite(url); return true; } }
-  window.clearAllFavorites = ()=>{ if(!confirm('Tem certeza que deseja remover todos os favoritos? 🐾')) return; localStorage.removeItem('favorites'); renderFavorites(); }
+  // MODAL
+  const openModal=url=>{ currentImageUrl=url; modalImage.src=url; modal.classList.add('show'); updateModalButton(); };
+  const closeModal=()=>modal.classList.remove('show');
+  const updateModalButton=()=>favoriteImageBtn.textContent=getFavorites().includes(currentImageUrl)?'❌ Remover favorito':'⭐ Favoritar';
 
-  // ================= MODAL =================
-  function openModal(url){ currentImageUrl=url; modalImage.src=url; modal.classList.add('show'); updateModalFavoriteButton(); }
-  function closeModal(){ modal.classList.remove('show'); }
-  function updateModalFavoriteButton(){ const favs=getFavorites(); favoriteImageBtn.textContent=favs.includes(currentImageUrl)?'❌ Remover favorito':'⭐ Favoritar'; }
+  // SALVAR IMAGEM
+  const saveImage=async url=>{ try{ const b=await(await fetch(url)).blob(); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='gatinho-'+Date.now()+'.jpg'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href);}catch{ window.open(url,'_blank'); } };
 
-  // ================= SALVAR IMAGEM =================
-  async function saveImage(url){
-    try{
-      const res=await fetch(url);
-      const blob=await res.blob();
-      const a=document.createElement('a');
-      a.href=URL.createObjectURL(blob);
-      a.download='gatinho-'+Date.now()+'.jpg';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(a.href);
-    }catch(e){ window.open(url,'_blank'); }
-  }
-
-  // ================= ANIMAÇÃO ESTRELA =================
-  function animateStar(type='⭐', targetElement){
-    const star=document.createElement('div');
-    star.classList.add('flying-star'); star.innerHTML=type;
-    document.body.appendChild(star);
-    const rect=targetElement.getBoundingClientRect();
-    star.style.left=rect.left+rect.width/2-20+'px';
-    star.style.top=rect.top+rect.height/2-20+'px';
+  // ESTRELA
+  const animateStar=(type,target)=>{
+    const star=document.createElement('div'); star.className='flying-star'; star.innerHTML=type; document.body.appendChild(star);
+    const r=target.getBoundingClientRect(); star.style.left=r.left+r.width/2-20+'px'; star.style.top=r.top+r.height/2-20+'px';
     setTimeout(()=>{ star.style.transform='translateY(-150px) scale(4)'; star.style.opacity='0'; },50);
     setTimeout(()=>star.remove(),500);
-  }
+  };
 
-  // ================= RENDER FAVORITOS =================
-  function renderFavorites(){
-    gallery.innerHTML='';
-    const favorites=getFavorites();
-    if(favorites.length===0){ gallery.innerHTML='<p style="text-align:center; font-size:1.2rem; margin-top:2rem;">Nenhum favorito ainda 🐾</p>'; return; }
-    favorites.forEach(url=>{
-      const card=document.createElement('div'); card.classList.add('card');
+  // RENDER
+  const renderFavorites=()=>{
+    gallery.innerHTML=''; const f=getFavorites();
+    if(!f.length){ gallery.innerHTML='<p style="align-text:center; font-size:1.2rem; margin-top:2rem;">Nenhum favorito ainda 🐾</p>'; return; }
+    f.forEach(url=>{
+      const card=document.createElement('div'); card.className='card';
       const img=document.createElement('img'); img.src=url; img.alt='Gatinho fofo'; img.addEventListener('click',()=>openModal(url));
-      const favIcon=document.createElement('span'); favIcon.classList.add('favorite-icon','active'); favIcon.innerHTML='⭐';
-      favIcon.addEventListener('click', e=>{ e.stopPropagation(); removeFavorite(url); animateStar('❌',card); });
-      card.appendChild(img); card.appendChild(favIcon);
-      gallery.appendChild(card);
+      const favIcon=document.createElement('span'); favIcon.className='favorite-icon active'; favIcon.innerHTML='⭐';
+      favIcon.addEventListener('click',e=>{ e.stopPropagation(); removeFavorite(url); animateStar('❌',card); });
+      card.append(img,favIcon); gallery.appendChild(card);
     });
-  }
+  };
 
-  // ================= EVENTOS =================
-  modalClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
-  saveImageBtn.addEventListener('click',()=>{ if(currentImageUrl) saveImage(currentImageUrl); });
-  favoriteImageBtn.addEventListener('click',()=>{ if(!currentImageUrl)return; const isFav=toggleFavorite(currentImageUrl); updateModalFavoriteButton(); animateStar(isFav?'⭐':'❌', modalImage); });
+  // EVENTOS
+  modalClose.addEventListener('click',closeModal);
+  modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+  saveImageBtn.addEventListener('click',()=>currentImageUrl&&saveImage(currentImageUrl));
+  favoriteImageBtn.addEventListener('click',()=>{ if(!currentImageUrl)return; const isFav=toggleFavorite(currentImageUrl); updateModalButton(); animateStar(isFav?'⭐':'❌', modalImage); });
 
-  // ================= TOGGLE TEMA =================
-  function setTheme(theme){ document.body.classList.remove('light-theme','dark-theme'); document.body.classList.add(theme); localStorage.setItem('theme',theme); themeToggle.textContent = theme==='dark-theme'?'🌞':'🌙'; }
-  const savedTheme = localStorage.getItem('theme')||'light-theme';
-  setTheme(savedTheme);
-  themeToggle.addEventListener('click',()=>{ setTheme(document.body.classList.contains('light-theme')?'dark-theme':'light-theme'); });
+  // TEMA
+  const setTheme=t=>{ document.body.classList.remove('light-theme','dark-theme'); document.body.classList.add(t); localStorage.setItem('theme',t); themeToggle.textContent=t==='dark-theme'?'🌞':'🌙'; };
+  setTheme(localStorage.getItem('theme')||'light-theme');
+  themeToggle.addEventListener('click',()=>setTheme(document.body.classList.contains('light-theme')?'dark-theme':'light-theme'));
 
-  // ================= HAMBURGUER =================
+  // HAMBURGUER
   hamburgerBtn.addEventListener('click',()=>{ headerActions.classList.toggle('open'); hamburgerBtn.classList.toggle('active'); });
 
-  // ================= INIT =================
   renderFavorites();
 });
 </script>

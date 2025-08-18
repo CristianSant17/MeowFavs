@@ -3,11 +3,11 @@
 ========================== */
 :root {
   /* Cores */
-  --color-primary: #5c2a9d;
-  --color-primary-hover: #7d3fc7;
-  --color-secondary: #a561ff;
-  --color-secondary-hover: #7700ff;
-  --color-bg-gradient: linear-gradient(135deg, #ffe5ec, #e0bbff, #c8e7ff);
+  --color-primary: #ff00c8;
+  --color-primary-hover: #dd3ba7;
+  --color-secondary: #b500da;
+  --color-secondary-hover: #c765ff;
+  --color-bg-gradient: linear-gradient(135deg, #9e0dff, #e489ff, #ff00dd);
   --color-card-bg: rgba(255, 255, 255, 0.9);
   --color-card-actions: #fdfdfd;
   --color-text: #333;
@@ -67,7 +67,6 @@ header {
   transition: all 0.3s ease;
 }
 
-/* Efeito shrink ao rolar */
 header.shrink {
   height: 60px;
   padding: 0 1.5rem;
@@ -75,7 +74,6 @@ header.shrink {
   backdrop-filter: blur(15px);
 }
 
-/* Título centralizado e responsivo */
 header h1 {
   flex: 1;
   text-align: center;
@@ -84,7 +82,6 @@ header h1 {
   line-height: 1.2;
 }
 
-/* Container para ações do header */
 .header-right {
   display: flex;
   align-items: center;
@@ -93,7 +90,7 @@ header h1 {
 
 /* Botão tema */
 #themeToggle {
-  background: var(--color-primary, #5c2a9d);
+  background: var(--color-primary);
   color: white;
   border-radius: 50%;
   width: 40px;
@@ -103,16 +100,18 @@ header h1 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: 0.3s ease;
+  transform: scale(1);
+  transition: transform var(--transition-medium), background var(--transition-medium);
 }
 
 #themeToggle:hover {
   transform: scale(1.1);
+  background: var(--color-primary-hover);
 }
 
-/* Hamburger menu */
+/* Hamburger */
 .hamburger {
-  display: none; /* só aparece no mobile */
+  display: none;
   flex-direction: column;
   justify-content: space-between;
   width: 30px;
@@ -123,7 +122,7 @@ header h1 {
 .hamburger span {
   display: block;
   height: 3px;
-  background: var(--color-primary, #5c2a9d);
+  background: var(--color-primary);
   border-radius: 2px;
   transition: all 0.3s ease;
 }
@@ -145,11 +144,9 @@ header h1 {
   header {
     padding: 0 1rem;
   }
-
   header h1 {
     font-size: 1.5rem;
   }
-
   .header-actions {
     display: none;
     position: absolute;
@@ -162,18 +159,15 @@ header h1 {
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     z-index: 999;
   }
-
   .header-actions.open {
     display: flex;
   }
-
   .hamburger {
     display: flex;
-    order: 1; /* fica antes do título no mobile */
+    order: 1;
   }
-
   #themeToggle {
-    order: 2; /* botão à direita do hamburguer */
+    order: 2;
   }
 }
 
@@ -181,15 +175,15 @@ header h1 {
    MAIN
 ========================= */
 main {
+  margin-top: 100px;
   padding-top: 100px;
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-
 /* ==========================
-   BUTTONS GERAIS
+   BOTÕES
 ========================== */
 button {
   background: var(--color-primary);
@@ -199,8 +193,9 @@ button {
   border: none;
   border-radius: 2rem;
   cursor: pointer;
-  transition: 1s ease;
+  transform: scale(1);
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: background var(--transition-medium), transform var(--transition-medium);
 }
 
 button:hover {
@@ -209,7 +204,7 @@ button:hover {
 }
 
 /* ==========================
-   GALERIA / MAIN
+   GALERIA
 ========================== */
 .painel-principal, main {
   width: 100%;
@@ -235,18 +230,17 @@ button:hover {
 .card {
   background: var(--color-card-bg);
   border-radius: var(--card-radius);
-  overflow: hidden;
   box-shadow: var(--card-shadow);
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  position: relative;
+  flex-direction: column; /* topo -> imagem -> botão */
+  align-items: center;    
+  justify-content: space-between; /* garante espaçamento entre topo e base */
+  width: 230px;   
+  height: 300px;  
   overflow: hidden;
-  border-radius: 1rem;
-  transition: transform 0.3s, box-shadow 0.3s;
-  max-width: 240px;
   position: relative;
-  transition: 1s ease;
+  transform: translateY(0);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
 
 .card:hover {
@@ -255,15 +249,30 @@ button:hover {
 }
 
 .card img {
-  width: 100%;
-  height: 220px;
+  min-width: 200px;
+  min-height: 180px;
+  max-width: 200px;
+  max-height: 180px;
   object-fit: cover;
   border-radius: var(--card-radius);
-  transition: 1s ease;
+  margin: 10px 0;
+  margin-top: 50px;
+  transform: scale(1);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
 
 .card img:hover {
+  transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.card button {
+  margin-bottom: 8px; /* botão colado embaixo */
+}
+
+.card button:hover {
+  background: var(--color-secondary);
+  transform: scale(1.05);
 }
 
 .actions {
@@ -279,9 +288,9 @@ button:hover {
   padding: 0.5rem 1rem;
   border-radius: 1.5rem;
   text-decoration: none;
-  transition: background var(--transition-medium), transform var(--transition-fast);
+  transform: scale(1);
   display: inline-block;
-  transition: 1s ease;
+  transition: background var(--transition-medium), transform var(--transition-fast);
 }
 
 .actions a:hover {
@@ -295,12 +304,13 @@ button:hover {
   text-decoration: none;
   color: var(--color-primary);
   font-weight: bold;
-  transition: 0.3s ease;
+  transform: scale(1);
+  transition: color var(--transition-medium), transform var(--transition-medium);
 }
 
 .fav-link:hover {
   color: var(--color-primary-hover);
-  transform: scale3d(1.05, 1.05, 1);
+  transform: scale(1.1);
 }
 
 .card .favorite-icon {
@@ -309,12 +319,12 @@ button:hover {
   right: 10px;
   font-size: 1.5rem;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transform: scale(1);
+  transition: transform var(--transition-fast), color var(--transition-medium);
 }
 
 .card .favorite-icon.active {
   color: gold;
-  transition: 1s ease;
 }
 
 .card .favorite-icon:hover {
@@ -325,7 +335,7 @@ button:hover {
    MODAL
 ========================== */
 .modal {
-  display: flex; /* já que vamos controlar visibilidade via opacity */
+  display: flex;
   position: fixed;
   z-index: 2000;
   left: 0;
@@ -334,10 +344,10 @@ button:hover {
   height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0,0,0,0); /* transparente no início */
+  background-color: rgba(0,0,0,0);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
 }
 
 .modal.show {
@@ -357,27 +367,14 @@ button:hover {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  transform: scale(0.8); /* inicia menor */
-  opacity: 0;             /* inicia invisível */
+  transform: scale(0.8);
+  opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .modal.show .modal-content {
-  transform: scale(1);   /* escala para normal */
-  opacity: 1;            /* aparece */
-}
-
-.modal-content {
-  position: relative;
-  background-color: white;
-  padding: 1rem;
-  border-radius: 1rem;
-  max-width: 90%;
-  max-height: 90%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  transform: scale(1);
+  opacity: 1;
 }
 
 .modal-content img {
@@ -388,6 +385,7 @@ button:hover {
 }
 
 .modal-content img:hover {
+  transform: scale(1.02);
   box-shadow: 0 8px 20px var(--color-primary);
 }
 
@@ -404,7 +402,7 @@ button:hover {
 }
 
 /* ==========================
-   BOTÕES DE SCROLL FIXOS
+   BOTÕES FIXOS
 ========================== */
 #backToTop, #topToBack {
   position: fixed;
@@ -420,22 +418,21 @@ button:hover {
   display: none;
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  transition: all var(--transition-medium);
+  transition: background var(--transition-medium), transform var(--transition-medium);
 }
 
 #backToTop.show {
   display: block;
   bottom: 90px;
 }
-
 #topToBack.show {
   display: block;
   bottom: 20px;
-  transform: 1s ease;
 }
 
 #backToTop:hover, #topToBack:hover {
   background-color: var(--color-secondary-hover);
+  transform: scale(1.1);
 }
 
 /* ==========================
@@ -453,107 +450,85 @@ footer {
   padding: 15px;
   font-size: 0.9rem;
   box-shadow: 0 -3px 8px rgba(0,0,0,0.2);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 footer a {
   color: #ffcc00;
   margin-left: 10px;
-  transition: color 0.3s ease;
   text-decoration: none;
   font-weight: bold;
+  transition: color var(--transition-medium);
 }
-
 footer a:hover {
   color: white;
 }
 
 /* ==========================
-   ALTERAR O TEMA COMPLETO (MODAL & CARDS)
+   TEMAS
 ========================== */
-
-/* Tema claro */
 body.light-theme {
   background: #f5f5f5;
   color: #222;
 }
-
 body.light-theme header {
   background: rgba(255,255,255,0.8);
   color: #222;
 }
-
 body.light-theme footer {
   background: rgba(255,255,255,0.9);
   color: #333;
 }
-
 body.light-theme .card {
   background-color: #fff;
   color: #222;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-
 body.light-theme .modal {
   background-color: rgba(0,0,0,0.3);
 }
-
 body.light-theme .modal-content {
   background-color: #fff;
   color: #222;
 }
-
 body.light-theme button {
   background-color: var(--color-primary);
   color: white;
 }
-
 body.light-theme .fav-link {
   color: var(--color-primary);
 }
 
-/* Tema escuro */
 body.dark-theme {
   background: #111;
   color: #f5f5f5;
 }
-
 body.dark-theme header {
   background: rgba(20,20,20,0.8);
   color: #f5f5f5;
 }
-
 body.dark-theme footer {
   background: rgba(20,20,20,0.8);
   color: #eee;
 }
-
 body.dark-theme .card {
   background-color: #222;
   color: #f5f5f5;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
-
 body.dark-theme .modal {
   background-color: rgba(0,0,0,0.7);
 }
-
 body.dark-theme .modal-content {
   background-color: #333;
   color: #f5f5f5;
 }
-
 body.dark-theme button {
   background-color: var(--color-primary);
   color: white;
 }
-
 body.dark-theme .fav-link {
   color: var(--color-secondary);
-}
-
-/* Transições suaves para tudo */
-body, header, footer, .card, .modal-content, .modal, button, .fav-link {
-  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
 /* ==========================
@@ -563,13 +538,11 @@ body, header, footer, .card, .modal-content, .modal, button, .fav-link {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
 }
-
 .fade-in {
   opacity: 0;
   transform: translateY(10px);
   animation: fadeInUp 0.4s forwards;
 }
-
 @keyframes fadeInUp {
   to {
     opacity: 1;
@@ -590,14 +563,13 @@ body, header, footer, .card, .modal-content, .modal, button, .fav-link {
 }
 
 /* ==========================
-   MENU HAMBURGUER (RESPONSIVO)
+   MENU HAMBURGUER
 ========================== */
 .header-actions {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-
 .hamburger {
   display: none;
   flex-direction: column;
@@ -606,7 +578,6 @@ body, header, footer, .card, .modal-content, .modal, button, .fav-link {
   height: 22px;
   cursor: pointer;
 }
-
 .hamburger span {
   display: block;
   height: 3px;
@@ -614,8 +585,6 @@ body, header, footer, .card, .modal-content, .modal, button, .fav-link {
   border-radius: 2px;
   transition: all 0.3s ease;
 }
-
-/* Quando abrir menu */
 .header-actions.open {
   flex-direction: column;
   position: absolute;
@@ -625,14 +594,7 @@ body, header, footer, .card, .modal-content, .modal, button, .fav-link {
   padding: 1rem;
   border-radius: 8px;
 }
-
-/* Responsividade */
 @media (max-width: 768px) {
-  .header-actions {
-    display: none;
-  }
-
-  .hamburger {
-    display: flex;
-  }
+  .header-actions { display: none; }
+  .hamburger { display: flex; }
 }

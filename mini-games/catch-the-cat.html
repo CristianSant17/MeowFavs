@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catch the Cat 🐱</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body { display:flex; flex-direction:column; align-items:center; padding:2rem; min-height:100vh; background:#fdf6f0; }
+  h1 { margin-bottom:1rem; }
+  #game-area { position:relative; width:100%; max-width:800px; height:500px; background:#fff3e6; border:2px solid #e2b07f; border-radius:1rem; overflow:hidden; }
+  .cat { position:absolute; width:60px; height:60px; cursor:pointer; transition:transform 0.2s; }
+  #scoreboard, #lives, #level { margin-top:0.5rem; font-size:1.2rem; }
+  button { margin-top:1rem; padding:0.5rem 1rem; border-radius:8px; border:none; background:#5c2a9d; color:#fff; cursor:pointer; transition:transform 0.2s; }
+  button:hover { transform:scale(1.05); }
+</style>
+</head>
+<body>
+<h1>Catch the Cat 🐱</h1>
+<div id="game-area"></div>
+<div id="scoreboard">Pontuação: 0</div>
+<div id="lives">Vidas: 5</div>
+<div id="level">Nível: 1</div>
+<button id="startBtn">Começar Jogo</button>
+<button onclick="location.href='index.html'">← Voltar ao Menu</button>
+
+<script src="catch-the-cat.js"></script>
+</body>
+</html>

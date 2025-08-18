@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐾 MeowGames – Mini Games de Gatinhos 🐾</title>
+
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body { display: flex; flex-direction: column; align-items: center; padding: 2rem; }
+    h1 { margin-bottom: 2rem; text-align: center; }
+    .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 1.5rem; max-width: 1000px; width: 100%; }
+    .game-card { background: #fff; border-radius: 1rem; padding: 1.5rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+    .game-card:hover { transform: translateY(-5px); box-shadow: 0 8px 18px rgba(0,0,0,0.25); }
+    .game-card i { font-size: 3rem; margin-bottom: 1rem; }
+    .game-card h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .game-card p { font-size: 0.95rem; color: #555; }
+  </style>
+</head>
+<body>
+      <!-- Cabeçalho MeowFavs -->
+  <header id="mainHeader">
+    <h1>MeowFavs – Gatinhos Fofinhos</h1>
+
+    <!-- Botões e links do header -->
+    <div class="header-right">
+      <div class="header-actions">
+        <a href="../index.html" class="fav-link">🏠 Voltar ao Início</a>
+        <a href="../favoritos.html" class="fav-link">⭐ Meus Favoritos</a>
+      </div>
+
+      <!-- Botão hamburguer -->
+      <div class="hamburger" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <h1 style="margin-top: 100px; margin-bottom: 50px;">🐾 MeowGames – Mini Games de Gatinhos 🐾</h1>
+  <p style="margin-bottom: 30px;"><b>Jogos ainda não disponíveis</b></p>
+
+  <div class="games-grid">
+    <div class="game-card" onclick="location.href=''">
+      <i class="fas fa-mouse"></i>
+      <h2>Catch the Cat</h2>
+      <p>Clique nos gatinhos antes que eles desapareçam!</p>
+    </div>
+
+    <div class="game-card" onclick="location.href=''">
+      <i class="fas fa-brain"></i>
+      <h2>Memory Game</h2>
+      <p>Teste sua memória com gatinhos fofinhos.</p>
+    </div>
+
+    <div class="game-card" onclick="location.href=''">
+      <i class="fas fa-question-circle"></i>
+      <h2>Cat Quiz</h2>
+      <p>Responda perguntas sobre gatos e marque pontos!</p>
+    </div>
+
+    <div class="game-card" onclick="location.href=''">
+      <i class="fas fa-star"></i>
+      <h2>Favorite Challenge</h2>
+      <p>Favorite o máximo de gatinhos em tempo limitado!</p>
+    </div>
+
+    <div class="game-card" onclick="location.href=''">
+      <i class="fas fa-arrows-alt-v"></i>
+      <h2>Scroll Challenge</h2>
+      <p>Desça a galeria rapidamente e capture os gatinhos!</p>
+    </div>
+  </div>
+</body>
+</html>
